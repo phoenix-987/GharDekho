@@ -29,7 +29,7 @@ def list_all_properties(request):
 
 
 @api_view(['GET'])
-def list_properties(request, pk):
+def list_property(request, pk):
     try:
         try:
             obj = Properties.objects.get(pk=pk)
