@@ -1,4 +1,3 @@
-# import json
 from ..models import Properties
 from rest_framework import status
 from rest_framework.response import Response
