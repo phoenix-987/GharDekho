@@ -20,7 +20,6 @@ AVAILABILITY_CHOICES = (
 )
 
 
-# Create your models here.
 class Properties(models.Model):
     title = models.CharField(max_length=256, null=False, blank=False)
     description = models.TextField(null=False,
