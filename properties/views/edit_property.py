@@ -13,7 +13,7 @@ def edit_property(request, pk):
             serializer = PropertySerializer(property_detail)
             return {'msg': dict(serializer.data)}, status.HTTP_200_OK
         except Exception as e:
-            return {'error': str(e)}, status.HTTP_400_BAD_REQUEST
+            return {'error': str(e)}, status.HTTP_204_NO_CONTENT
 
     try:
         data, data_status = get_property_details(pk)
@@ -33,6 +33,6 @@ def edit_property(request, pk):
 
     except Exception as e:
         data = {'error': str(e)}
-        data_status = status.HTTP_400_BAD_REQUEST
+        data_status = status.HTTP_500_INTERNAL_SERVER_ERROR
 
     return Response(data, status=data_status)
