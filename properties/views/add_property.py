@@ -11,10 +11,9 @@ def add_new_property(request):
     serializer = PropertySerializer(data=data)
 
     try:
-        if serializer.is_valid():
+        if serializer.is_valid(raise_exception=True):
             serializer.save()
-        else:
-            raise serializers.ValidationError(serializer.errors)
+
     except Exception as e:
         return Response({'error': str(e)}, status=status.HTTP_206_PARTIAL_CONTENT)
         # print(e)
