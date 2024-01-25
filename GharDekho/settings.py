@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     # Custom Apps
     'storages',
     'properties',
+    'authorization',
     'rest_framework',
 ]
 
