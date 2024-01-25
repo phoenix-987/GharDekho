@@ -9,7 +9,7 @@ class UserModelAdmin(UserAdmin):
     list_display = ('id', 'email', 'name', 'is_owner', 'is_admin')
     # Helps to filter out data at admin panel
     list_filter = ('is_owner', 'is_admin')
-    # Categorised the data acording to our need.
+    # Categorised the data according to our need.
     fieldsets = [
         ('User Credentials', {'fields': ['email', 'password']}),
         ('Personal Info', {'fields': ['name']}),
