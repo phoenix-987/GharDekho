@@ -3,7 +3,6 @@ from rest_framework import serializers
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from authorization.renderers import AuthJSONRenderer
-from django.contrib.auth.hashers import make_password
 from authorization.serializers.user_serializer import UserSerializer
 from authorization.bin.generate_user_tokens import GenerateUserTokens
 
@@ -12,8 +11,6 @@ class UserRegistrationView(APIView):
     renderer_classes = [AuthJSONRenderer]
 
     def post(self, request):
-        # Hashing the given password
-        request.data['password'] = make_password(request.data.get('password'))
         serializer = UserSerializer(data=request.data)
 
         try:
