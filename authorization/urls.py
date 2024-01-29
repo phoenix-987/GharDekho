@@ -13,4 +13,6 @@ urlpatterns = [
     path('reset-password/', SendResetPwdView.as_view(), name='user-reset-password-mail'),
     # End-point for change password page, so user can change it feasibly.
     path('change-password/', UserChangePasswordView.as_view(), name='user-change-password'),
+    # End-point for reset password with unique token, so user can reset password only for their account.
+    path('reset/<uid>/<token>/', UserResetPasswordView.as_view(), name='user-reset-password'),
 ]
