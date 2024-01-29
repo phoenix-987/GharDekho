@@ -166,3 +166,14 @@ SIMPLE_JWT = {
     "SLIDING_TOKEN_LIFETIME": timedelta(minutes=5),
     "SLIDING_TOKEN_REFRESH_LIFETIME": timedelta(days=1),
 }
+
+PASSWORD_RESET_TIMEOUT = 300
+
+# Email Configurations
+EMAIL_BACKEND = environ.get('EMAIL_BACKEND')
+EMAIL_HOST = environ.get('EMAIL_HOST')
+EMAIL_PORT = environ.get('EMAIL_PORT')
+# Email credentials
+EMAIL_HOST_USER = environ.get('EMAIL_USER')
+EMAIL_HOST_PASSWORD = environ.get('EMAIL_PASSWORD')
+EMAIL_USE_TLS = True

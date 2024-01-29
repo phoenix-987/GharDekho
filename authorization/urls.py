@@ -9,6 +9,8 @@ urlpatterns = [
     path('profile/', UserProfileView.as_view(), name='user-profile'),
     # End-point for user registration page.
     path('register/', UserRegistrationView.as_view(), name='user-registration'),
+    # End-point for requesting reset password link via email.
+    path('reset-password/', SendResetPwdView.as_view(), name='user-reset-password-mail'),
     # End-point for change password page, so user can change it feasibly.
     path('change-password/', UserChangePasswordView.as_view(), name='user-change-password'),
 ]
