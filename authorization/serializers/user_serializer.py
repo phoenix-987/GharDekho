@@ -1,10 +1,9 @@
 from rest_framework import serializers
 from authorization.models.users import User
-from django.contrib.auth.hashers import make_password
 
 
 class UserSerializer(serializers.ModelSerializer):
-    confirm_password = serializers.CharField(style={'input_type': 'password'}, write_only=True)
+    confirm_password = serializers.CharField(max_length=255, style={'input_type': 'password'})
 
     class Meta:
         model = User
@@ -18,7 +17,6 @@ class UserSerializer(serializers.ModelSerializer):
         if password != confirm_password:
             raise serializers.ValidationError('Passwords do not match!')
 
-        attrs['password'] = make_password(password)
         return attrs
 
     def create(self, validated_data):
