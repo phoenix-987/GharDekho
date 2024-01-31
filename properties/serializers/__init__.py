@@ -1,1 +1,1 @@
-from properties.serializers import *
+from .property_serializer import *
