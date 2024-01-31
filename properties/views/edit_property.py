@@ -3,9 +3,12 @@ from properties.models import Properties
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from properties.serializers import PropertySerializer
+from properties.renderers import PropertiesJSONRenderer
 
 
 class EditPropertyView(APIView):
+    # Renders the output in the Json format.
+    renderer_classes = [PropertiesJSONRenderer]
     def put(self, request, pk):
         try:
             # Fetching property details of the given id
