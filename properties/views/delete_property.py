@@ -3,11 +3,16 @@ from properties.models import Properties
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from properties.renderers import PropertiesJSONRenderer
+from authorization.authentication import OwnerIsAuthenticated
 
 
 class DeletePropertyView(APIView):
+
     # Renders the output in the Json format.
     renderer_classes = [PropertiesJSONRenderer]
+    # Authenticates whether the user is authorized or not to perform the action.
+    permission_classes = [OwnerIsAuthenticated]
+
     def delete(self, request, pk):
         try:
             # Fetching the required property object from database.
