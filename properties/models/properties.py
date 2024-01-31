@@ -1,4 +1,5 @@
 from django.db import models
+from authorization.models import User
 
 TENANT_CHOICES = (
     ('Any', 'Any'),
@@ -21,6 +22,7 @@ AVAILABILITY_CHOICES = (
 
 
 class Properties(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
     title = models.CharField(max_length=256, null=False, blank=False)
     description = models.TextField(null=False,
                                    blank=False,
