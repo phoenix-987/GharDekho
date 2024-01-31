@@ -1,21 +1,32 @@
-from ..models import Properties
 from rest_framework import status
+from properties.models import Properties
+from rest_framework.views import APIView
 from rest_framework.response import Response
-from rest_framework.decorators import api_view
 
 
-@api_view(['DELETE'])
-def delete_property(request, pk):
-    try:
-        result = Properties.objects.filter(pk=pk).delete()
-        if result[0] == 1:
-            data = {'msg': 'Property removed successfully'}
-            data_status = status.HTTP_202_ACCEPTED
-        else:
-            data = {'msg': 'Property not found!'}
-            data_status = status.HTTP_204_NO_CONTENT
-    except Exception as e:
-        data = str(e)
-        data_status = status.HTTP_500_INTERNAL_SERVER_ERROR
+class DeletePropertyView(APIView):
+    def delete(self, request, pk):
+        try:
+            # Fetching the required property object from database.
+            property_obj = Properties.objects.filter(pk=pk)
+            # Deleting the fetched property.
+            response = property_obj.delete()
 
-    return Response(data, status=data_status)
+            # Checking if property is deleted or not with appropriate response respectively.
+            if response[0] == 1:
+                return Response(
+                    {'message': 'Property removed successfully.'},
+                    status=status.HTTP_200_OK
+                )
+            else:
+                return Response(
+                    {'message': 'Property not found.'},
+                    status=status.HTTP_404_NOT_FOUND
+                )
+
+        # Sending the response if something goes wrong during the deletion process.
+        except Exception as e:
+            return Response(
+                {'message': str(e)},
+                status=status.HTTP_500_INTERNAL_SERVER_ERROR
+            )

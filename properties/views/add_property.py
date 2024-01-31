@@ -1,21 +1,32 @@
-from ..models import Properties
+from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status, serializers
-from rest_framework.decorators import api_view
-from ..serializers.property_serializer import PropertySerializer
+from properties.serializers import PropertySerializer
 
 
-@api_view(['POST'])
-def add_new_property(request):
-    data = request.data
-    serializer = PropertySerializer(data=data)
+class AddPropertyView(APIView):
+    def post(self, request):
+        serializer = PropertySerializer(data=request.data)
 
-    try:
-        if serializer.is_valid(raise_exception=True):
-            serializer.save()
+        # Saving the new property object in the database if data is valid with appropriate response.
+        try:
+            if serializer.is_valid(raise_exception=True):
+                serializer.save()
+                return Response(
+                    {'message': 'Property added successfully'},
+                    status=status.HTTP_201_CREATED
+                )
 
-    except Exception as e:
-        return Response({'error': str(e)}, status=status.HTTP_206_PARTIAL_CONTENT)
-        # print(e)
+        # Sending the response if something goes wrong with the respective error while validating data.
+        except serializers.ValidationError:
+            return Response(
+                {'message': serializer.errors},
+                status=status.HTTP_400_BAD_REQUEST
+            )
 
-    return Response({'message': 'Property Added successfully'}, status=status.HTTP_201_CREATED)
+        # Sending the response if something goes wrong with the respective error at any point.
+        except Exception as e:
+            return Response(
+                {'message': str(e)},
+                status=status.HTTP_500_INTERNAL_SERVER_ERROR
+            )
