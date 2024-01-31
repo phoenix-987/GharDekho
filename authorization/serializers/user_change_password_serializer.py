@@ -28,7 +28,11 @@ class UserChangePasswordSerializer(serializers.Serializer):
         if new_password != confirm_password:
             raise serializers.ValidationError('Passwords do not match!')
 
-        user.set_password(new_password)
-        user.save()
+        # Saving New Password in the database.
+        try:
+            user.set_password(new_password)
+            user.save()
+        except Exception as e:
+            raise serializers.ValidationError(str(e))
 
         return attrs
