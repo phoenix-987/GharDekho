@@ -1,4 +1,5 @@
 from rest_framework import status
+from authorization.models import User
 from properties.models import Properties
 from rest_framework.views import APIView
 from rest_framework.response import Response
@@ -17,14 +18,21 @@ class EditPropertyView(APIView):
     def put(self, request, pk):
         try:
             # Fetching property details of the given id
-            data = self.get_property_details(pk=pk)
+            data = self.__get_property_details(pk=pk)
             data.pop('id')
-            data.pop('user')
+            user_id = data.pop('user')
 
-            # Check if the passed data is whether empty or same as stored in the database.
-            if request.data is None or request.data == {} or request.data == data:
+            # Checking if the owner of property is trying to edit the details or not.
+            if user_id != request.user.id:
                 return Response(
-                    {'message': 'No changes found.'},
+                    {'message': 'You do not have permission to perform this action.'},
+                    status=status.HTTP_401_UNAUTHORIZED
+                )
+
+            # Check if the passed data is whether empty or not.
+            if request.data is None or request.data == {}:
+                return Response(
+                    {'message': 'No data found.'},
                     status=status.HTTP_400_BAD_REQUEST
                 )
 
@@ -57,7 +65,7 @@ class EditPropertyView(APIView):
             )
 
     @staticmethod
-    def get_property_details(pk):
+    def __get_property_details(pk):
         """
         Method to fetch and return the requested properties from the database.
         """

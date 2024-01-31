@@ -16,7 +16,14 @@ class DeletePropertyView(APIView):
     def delete(self, request, pk):
         try:
             # Fetching the required property object from database.
-            property_obj = Properties.objects.filter(pk=pk)
+            property_obj = Properties.objects.get(pk=pk)
+
+            if property_obj.user.id != request.user.id:
+                return Response(
+                    {"message": "You do not have permission to perform this action."},
+                    status=status.HTTP_401_UNAUTHORIZED
+                )
+
             # Deleting the fetched property.
             response = property_obj.delete()
 
