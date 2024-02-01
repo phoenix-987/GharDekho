@@ -2,9 +2,12 @@ from rest_framework import status
 from properties.models import Properties
 from rest_framework.views import APIView
 from rest_framework.response import Response
+from properties.renderers import PropertiesJSONRenderer
 
 
 class DeletePropertyView(APIView):
+    # Renders the output in the Json format.
+    renderer_classes = [PropertiesJSONRenderer]
     def delete(self, request, pk):
         try:
             # Fetching the required property object from database.

@@ -2,9 +2,12 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status, serializers
 from properties.serializers import PropertySerializer
+from properties.renderers import PropertiesJSONRenderer
 
 
 class AddPropertyView(APIView):
+    # Renders the output in the Json format.
+    renderer_classes = [PropertiesJSONRenderer]
     def post(self, request):
         serializer = PropertySerializer(data=request.data)
 

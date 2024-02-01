@@ -3,12 +3,15 @@ from properties.models import Properties
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from properties.serializers import PropertySerializer
+from properties.renderers import PropertiesJSONRenderer
 
 
 class PropertyListView(APIView):
     """
     Class for fetching all the properties from the database and returning them.
     """
+    # Renders the output in the Json format.
+    renderer_classes = [PropertiesJSONRenderer]
     def get(self, request):
         try:
             # Fetching all the properties.
@@ -47,6 +50,8 @@ class GetPropertyView(APIView):
     """
     Class for fetching the requested property details from the database and returning them.
     """
+    # Renders the output in the Json format.
+    renderer_classes = [PropertiesJSONRenderer]
     def get(self, request, pk):
         try:
             try:
