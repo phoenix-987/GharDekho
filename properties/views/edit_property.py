@@ -4,11 +4,16 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from properties.serializers import PropertySerializer
 from properties.renderers import PropertiesJSONRenderer
+from authorization.authentication import OwnerIsAuthenticated
 
 
 class EditPropertyView(APIView):
+
     # Renders the output in the Json format.
     renderer_classes = [PropertiesJSONRenderer]
+    # Authenticates whether the user is authorized or not to perform the action.
+    permission_classes = [OwnerIsAuthenticated]
+
     def put(self, request, pk):
         try:
             # Fetching property details of the given id
@@ -63,5 +68,3 @@ class EditPropertyView(APIView):
 
         except Exception as e:
             raise Exception(str(e))
-
-

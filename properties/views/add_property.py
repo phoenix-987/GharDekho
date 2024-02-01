@@ -3,11 +3,16 @@ from rest_framework.response import Response
 from rest_framework import status, serializers
 from properties.serializers import PropertySerializer
 from properties.renderers import PropertiesJSONRenderer
+from authorization.authentication import OwnerIsAuthenticated
 
 
 class AddPropertyView(APIView):
+
     # Renders the output in the Json format.
     renderer_classes = [PropertiesJSONRenderer]
+    # Authenticates whether the user is authorized or not to perform the action.
+    permission_classes = [OwnerIsAuthenticated]
+
     def post(self, request):
         serializer = PropertySerializer(data=request.data)
 
