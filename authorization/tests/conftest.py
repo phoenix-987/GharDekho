@@ -12,6 +12,6 @@ def create_dummy_user(email):
     User.objects.create_user(
         email=email,
         name=Faker().name(),
-        password=Faker().password(),
+        password='password',
         is_owner=False
     )
