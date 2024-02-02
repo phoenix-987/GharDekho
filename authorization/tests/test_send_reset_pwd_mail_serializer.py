@@ -15,7 +15,7 @@ from authorization.serializers import SendResetPwdMailSerializer
 )
 def test_send_reset_pwd_mail_serializer(db, create_dummy_user, email, validity):
     try:
-        # Testing Serializer by calling with required value.
+        # Testing Serializer by calling it with required value.
         serializer = SendResetPwdMailSerializer(data={"email": email})
         assert validity == serializer.is_valid(raise_exception=True)
 
