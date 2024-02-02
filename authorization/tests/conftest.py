@@ -6,12 +6,14 @@ from authorization.models import User
 @pytest.mark.django_db
 @pytest.fixture
 def create_dummy_user(email):
-    if email is None or 'kir' not in email:
+    if email is None:
         return None
 
-    User.objects.create_user(
+    user = User.objects.create_user(
         email=email,
         name=Faker().name(),
         password='password',
         is_owner=False
     )
+
+    return user
