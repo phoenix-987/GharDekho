@@ -4,7 +4,7 @@ from django.db.transaction import atomic
 
 
 @pytest.mark.django_db
-# Parameters marker to test the cases.
+# Parameterize marker to test the cases.
 @pytest.mark.parametrize(
     'email, name, password, is_owner, validity',
     [
@@ -21,9 +21,12 @@ def test_create_user(email, name, password, is_owner, validity):
         # Creating user with atomic so that it will not give TransactionManagementError (violates not null constraint).
         with atomic():
             User.objects.create_user(email=email, name=name, password=password, is_owner=is_owner)
+
+        # Counting and asserting the validity that user has been created or not.
+        count = User.objects.all().count()
+        assert count == validity
+
     except Exception as e:
         print(e)
+        assert not validity
 
-    # Counting and asserting the validity that user has been created or not.
-    count = User.objects.all().count()
-    assert count == validity
