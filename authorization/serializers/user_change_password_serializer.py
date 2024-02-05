@@ -24,7 +24,7 @@ class UserChangePasswordSerializer(serializers.Serializer):
         if not authenticate(email=user.email, password=old_password):
             raise serializers.ValidationError('Old password is incorrect.')
 
-        # Checking if the new password matches or not
+        # Checking if the new password matches or not.
         if new_password != confirm_password:
             raise serializers.ValidationError('Passwords do not match!')
 

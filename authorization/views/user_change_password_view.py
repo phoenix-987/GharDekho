@@ -4,7 +4,7 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from authorization.renderers import AuthJSONRenderer
 from rest_framework.permissions import IsAuthenticated
-from authorization.serializers.user_change_password_serializer import UserChangePasswordSerializer
+from authorization.serializers import UserChangePasswordSerializer
 
 
 class UserChangePasswordView(APIView):
